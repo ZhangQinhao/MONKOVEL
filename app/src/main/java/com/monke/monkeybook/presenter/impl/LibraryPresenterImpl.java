@@ -7,16 +7,13 @@ import com.monke.monkeybook.MApplication;
 import com.monke.monkeybook.base.observer.SimpleObserver;
 import com.monke.monkeybook.bean.LibraryBean;
 import com.monke.monkeybook.cache.ACache;
-import com.monke.monkeybook.model.impl.GxwztvBookModelImpl;
+import com.monke.monkeybook.model.content.GxwztvBookModelImpl;
 import com.monke.monkeybook.presenter.ILibraryPresenter;
 import com.monke.monkeybook.view.ILibraryView;
 import java.util.LinkedHashMap;
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 public class LibraryPresenterImpl extends BasePresenterImpl<ILibraryView> implements ILibraryPresenter {
@@ -58,19 +55,11 @@ public class LibraryPresenterImpl extends BasePresenterImpl<ILibraryView> implem
     public void getLibraryData() {
         if (isFirst) {
             isFirst = false;
-            Observable.create(new ObservableOnSubscribe<String>() {
-                @Override
-                public void subscribe(ObservableEmitter<String> e) throws Exception {
-                    String cache = mCache.getAsString(LIBRARY_CACHE_KEY);
-                    e.onNext(cache);
-                    e.onComplete();
-                }
-            }).flatMap(new Function<String, ObservableSource<LibraryBean>>() {
-                @Override
-                public ObservableSource<LibraryBean> apply(String s) throws Exception {
-                    return GxwztvBookModelImpl.getInstance().analyLibraryData(s);
-                }
-            })
+            Observable.create((ObservableOnSubscribe<String>) e -> {
+                String cache = mCache.getAsString(LIBRARY_CACHE_KEY);
+                e.onNext(cache);
+                e.onComplete();
+            }).flatMap(s -> GxwztvBookModelImpl.getInstance().analyLibraryData(s))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new SimpleObserver<LibraryBean>() {
@@ -97,12 +86,9 @@ public class LibraryPresenterImpl extends BasePresenterImpl<ILibraryView> implem
                 .subscribe(new SimpleObserver<LibraryBean>() {
                     @Override
                     public void onNext(final LibraryBean value) {
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                mView.updateUI(value);
-                                mView.finishRefresh();
-                            }
+                        new Handler().postDelayed(() -> {
+                            mView.updateUI(value);
+                            mView.finishRefresh();
                         },1000);
                     }
 

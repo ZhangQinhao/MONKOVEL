@@ -1,0 +1,24 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="gedoor.kunfei.lunarreminder.ui.MainActivity">
+
+    <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_search_black_24dp"
+        android:title="@string/action_search"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_download"
+        android:icon="@drawable/ic_download_black_24dp"
+        android:title="@string/action_download"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_list_grid"
+        android:icon="@drawable/ic_view_quilt_black_24dp"
+        android:title="@string/action_list_grid"
+        app:showAsAction="never"/>
+
+</menu>

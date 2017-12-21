@@ -86,12 +86,9 @@ public class BookContentView extends FrameLayout {
         tvErrorInfo = (TextView) view.findViewById(R.id.tv_error_info);
         tvLoadAgain = (TextView) view.findViewById(R.id.tv_load_again);
 
-        tvLoadAgain.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (loadDataListener != null)
-                    loading();
-            }
+        tvLoadAgain.setOnClickListener(v -> {
+            if (loadDataListener != null)
+                loading();
         });
     }
 
@@ -102,7 +99,7 @@ public class BookContentView extends FrameLayout {
         qTag = System.currentTimeMillis();
         //执行请求操作
         if (loadDataListener != null) {
-            loadDataListener.loaddata(this, qTag, durChapterIndex, durPageIndex);
+            loadDataListener.loadData(this, qTag, durChapterIndex, durPageIndex);
         }
     }
 
@@ -234,7 +231,7 @@ public class BookContentView extends FrameLayout {
         float ascent = tvContent.getPaint().ascent();
         float descent = tvContent.getPaint().descent();
         float textHeight = descent - ascent;
-        return (int) ((height * 1.0f - tvContent.getLineSpacingExtra()) / (textHeight + tvContent.getLineSpacingExtra()));
+        return (int) ((height * 1.0f - tvContent.getLineSpacingExtra()) / (textHeight + tvContent.getLineSpacingExtra())) + 1;
     }
 
     public void setReadBookControl(ReadBookControl readBookControl) {

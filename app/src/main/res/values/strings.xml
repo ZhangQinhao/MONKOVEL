@@ -1,6 +1,20 @@
 <resources>
-    <string name="app_name">MONKOVEL</string>
+    <string name="app_name">阅读</string>
+    <string name="bookshelf_empty">书架还空着，先去添加吧！</string>
+    <string name="action_search">搜索</string>
+    <string name="action_download">下载任务</string>
+    <string name="action_list">列表视图</string>
+    <string name="action_grid">网格视图</string>
+    <string name="action_list_grid">列表/网格</string>
+    <string name="book_library">书城</string>
+    <string name="book_local">本地</string>
+    <string name="book_source_manage">书源管理</string>
+    <string name="setting">设置</string>
+    <string name="about">关于</string>
+    <string name="donate">捐赠</string>
 
+    <string name="navigation_drawer_open">open</string>
+    <string name="navigation_drawer_close">close</string>
     <string name="umeng_key">5954b3f999f0c76d1b001600</string>
 
     <string name="baidu_app_id">9942412</string>
@@ -15,4 +29,32 @@
     <string name="tv_searchbook_lastest">最新章节:%s</string>
     <string name="tv_pop_checkaddshelf">是否将《%s》放入书架？</string>
     <string name="tv_importbook_count">共%s个Text文件</string>
+    <string name="is_loading">加载中…</string>
+    <string name="get_data_error">获取数据失败！</string>
+    <string name="retry">重试</string>
+    <string name="download_offline">离线下载</string>
+    <string name="exchange_source">换源</string>
+    <string name="about_description">这是一款开源的阅读软件，你可以fork我们的代码自己编译APK。欢迎提交代码帮助改善应用。</string>
+    <string name="version_name">Version %s</string>
+    <string name="pt_auto_refresh">自动刷新</string>
+    <string name="ps_auto_refresh">打开软件时自动更新书籍</string>
+    <string name="backup">备份</string>
+    <string name="restore">恢复</string>
+    <string name="backup_permission">备份请给与存储权限</string>
+    <string name="restore_permission">恢复请给与存储权限</string>
+    <string name="ok">确认</string>
+    <string name="cancel">取消</string>
+    <string name="backup_confirmation">确认备份吗？</string>
+    <string name="backup_message">新备份会替换原有备份。</string>
+    <string name="restore_confirmation">确认恢复吗？</string>
+    <string name="restore_message">备份书架会覆盖现有书架。</string>
+    <string name="backup_success">备份成功</string>
+    <string name="backup_fail">备份失败</string>
+    <string name="restore_success">恢复成功</string>
+    <string name="restore_fail">恢复失败</string>
+    <string name="screen_direction">屏幕方向</string>
+    <string name="screen_sensor">跟随传感器</string>
+    <string name="screen_landscape">横向</string>
+    <string name="screen_portrait">竖向</string>
+    <string name="screen_unspecified">跟随系统</string>
 </resources>

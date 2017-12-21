@@ -122,18 +122,11 @@ public abstract class BaseActivity<T extends IPresenter> extends RxAppCompatActi
         overridePendingTransition(animIn, animExit);
     }
 
-    protected void startActivityForResultByAnim(Intent intent, int requestCode, @NonNull View view, @NonNull String transitionName, int animIn, int animExit) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            startActivityForResult(intent, requestCode, ActivityOptions.makeSceneTransitionAnimation(this, view, transitionName).toBundle());
-        } else {
-            startActivityForResultByAnim(intent, requestCode, animIn, animExit);
-        }
-    }
-
     protected void startActivityByAnim(Intent intent, @NonNull View view, @NonNull String transitionName, int animIn, int animExit) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             intent.putExtra(start_share_ele,true);
-            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this, view, transitionName).toBundle());
+            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this, view, transitionName);
+            startActivity(intent, options.toBundle());
         } else {
             startActivityByAnim(intent, animIn, animExit);
         }

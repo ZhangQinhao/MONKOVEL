@@ -8,55 +8,67 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/CAppTheme"
         tools:replace="android:theme">
-        <activity
-            android:name=".view.impl.WelcomeActivity"
-            android:screenOrientation="portrait">
+        <activity android:name=".view.activity.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
-            android:name=".view.impl.MainActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
+            android:name=".view.activity.MainActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask" />
+
         <activity
-            android:name=".view.impl.SearchActivity"
-            android:configChanges="locale|keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait"
+            android:name=".view.activity.SearchActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/CAppTransparentTheme"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
         <service android:name=".service.DownloadService" />
 
         <activity
-            android:name=".view.impl.LibraryActivity"
-            android:screenOrientation="portrait"
+            android:name=".view.activity.LibraryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/CAppTransparentTheme" />
         <activity
-            android:name=".view.impl.ChoiceBookActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".view.impl.BookDetailActivity"
-            android:screenOrientation="portrait"
+            android:name=".view.activity.ChoiceBookActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/CAppTransparentTheme" />
         <activity
-            android:name=".view.impl.ReadBookActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"></action>
-                <category android:name="android.intent.category.DEFAULT"></category>
-                <data android:mimeType="text/plain"></data>
+            android:name=".view.activity.BookDetailActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@style/CAppTransparentTheme" />
+        <activity
+            android:name=".view.activity.ReadBookActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask">
+            <intent-filter tools:ignore="AppLinkUrlError">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.impl.ImportBookActivity"
-            android:screenOrientation="portrait"
+            android:name=".view.activity.ImportBookActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@style/CAppTransparentTheme" />
+        <activity
+            android:name=".view.activity.BookSourceManageActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@style/CAppTransparentTheme" />
+        <activity
+            android:name=".view.activity.SettingActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@style/CAppTransparentTheme" />
+        <activity
+            android:name=".view.activity.AboutActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/CAppTransparentTheme" />
 
         <meta-data
@@ -70,15 +82,6 @@
             android:name="UMENG_CHANNEL_VALUE"
             android:value="${UMENG_CHANNEL_VALUE}" />
 
-        <provider
-            android:name="android.support.v4.content.FileProvider"
-            android:authorities="${applicationId}.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/bdp_update_filepaths" />
-        </provider>
     </application>
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
