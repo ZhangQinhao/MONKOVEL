@@ -130,7 +130,7 @@ public class ContentSwitchView extends FrameLayout implements BookContentView.Se
                 case MotionEvent.ACTION_UP:
                     if(startX == -1)
                         startX = event.getX();
-                    if (event.getX() - startX > 0) {
+                    if (event.getX() - startX > 10) {
                         if (state == PREANDNEXT || state == ONLYPRE) {
                             if (event.getX() - startX > scrollX) {
                                 //向前翻页成功
@@ -142,7 +142,7 @@ public class ContentSwitchView extends FrameLayout implements BookContentView.Se
                             //没有上一页
                             noPre();
                         }
-                    } else if (event.getX() - startX < 0) {
+                    } else if (event.getX() - startX < -10) {
                         if (state == PREANDNEXT || state == ONLYNEXT) {
                             int tempIndex = (state == PREANDNEXT ? 1 : 0);
                             if (startX - event.getX() > scrollX) {
