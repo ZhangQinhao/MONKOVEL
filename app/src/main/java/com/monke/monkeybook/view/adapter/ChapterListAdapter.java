@@ -1,7 +1,7 @@
 //Copyright (c) 2017. 章钦豪. All rights reserved.
 package com.monke.monkeybook.view.adapter;
 
-import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,52 +9,57 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
 import com.monke.monkeybook.R;
 import com.monke.monkeybook.bean.BookShelfBean;
+import com.monke.monkeybook.bean.ChapterListBean;
 import com.monke.monkeybook.widget.ChapterListView;
 
-public class ChapterListAdapter extends RecyclerView.Adapter<ChapterListAdapter.Viewholder> {
+public class ChapterListAdapter extends RecyclerView.Adapter<ChapterListAdapter.ThisViewHolder> {
     private BookShelfBean bookShelfBean;
     private ChapterListView.OnItemClickListener itemClickListener;
     private int index = 0;
-    private Boolean isAsc = true;
 
     public ChapterListAdapter(BookShelfBean bookShelfBean, @NonNull ChapterListView.OnItemClickListener itemClickListener) {
         this.bookShelfBean = bookShelfBean;
         this.itemClickListener = itemClickListener;
     }
 
-    @Override
-    public Viewholder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new Viewholder(LayoutInflater.from(parent.getContext()).inflate(R.layout.view_adapter_chapterlist, parent, false));
+    public void upChapterList(ChapterListBean chapterListBean) {
+        if (bookShelfBean.getChapterListSize() > chapterListBean.getDurChapterIndex()) {
+            bookShelfBean.getChapterList(chapterListBean.getDurChapterIndex()).setHasCache(chapterListBean.getHasCache());
+            notifyItemChanged(chapterListBean.getDurChapterIndex());
+        }
     }
 
     @Override
-    public void onBindViewHolder(Viewholder holder, final int posiTion) {
-        if (posiTion == getItemCount() - 1) {
-            holder.vLine.setVisibility(View.INVISIBLE);
-        } else
-            holder.vLine.setVisibility(View.VISIBLE);
+    public ThisViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new ThisViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_chapterlist, parent, false));
+    }
 
-        final int position;
-        if (isAsc) {
-            position = posiTion;
+    @Override
+    public void onBindViewHolder(ThisViewHolder holder, final int position) {
+        if (position == getItemCount() - 1) {
+            holder.vLine.setVisibility(View.INVISIBLE);
         } else {
-            position = getItemCount() - 1 - posiTion;
+            holder.vLine.setVisibility(View.VISIBLE);
         }
-        holder.tvName.setText(bookShelfBean.getBookInfoBean().getChapterlist().get(position).getDurChapterName());
-        holder.flContent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setIndex(position);
-                itemClickListener.itemClick(position);
-            }
+
+        holder.tvName.setText(bookShelfBean.getChapterList(position).getDurChapterName());
+        if (bookShelfBean.getChapterList(position).getHasCache()) {
+            holder.tvName.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        } else {
+            holder.tvName.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        }
+        holder.flContent.setOnClickListener(v -> {
+            setIndex(position);
+            itemClickListener.itemClick(position);
         });
         if (position == index) {
-            holder.flContent.setBackgroundColor(Color.parseColor("#cfcfcf"));
+            holder.flContent.setBackgroundResource(R.color.btn_bg_press);
             holder.flContent.setClickable(false);
         } else {
-            holder.flContent.setBackgroundResource(R.drawable.bg_ib_pre2);
+            holder.flContent.setBackgroundResource(R.drawable.bg_ib_pre);
             holder.flContent.setClickable(true);
         }
     }
@@ -64,20 +69,7 @@ public class ChapterListAdapter extends RecyclerView.Adapter<ChapterListAdapter.
         if (bookShelfBean == null)
             return 0;
         else
-            return bookShelfBean.getBookInfoBean().getChapterlist().size();
-    }
-
-    public class Viewholder extends RecyclerView.ViewHolder {
-        private FrameLayout flContent;
-        private TextView tvName;
-        private View vLine;
-
-        public Viewholder(View itemView) {
-            super(itemView);
-            flContent = (FrameLayout) itemView.findViewById(R.id.fl_content);
-            tvName = (TextView) itemView.findViewById(R.id.tv_name);
-            vLine = itemView.findViewById(R.id.v_line);
-        }
+            return bookShelfBean.getChapterListSize();
     }
 
     public int getIndex() {
@@ -88,5 +80,18 @@ public class ChapterListAdapter extends RecyclerView.Adapter<ChapterListAdapter.
         notifyItemChanged(this.index);
         this.index = index;
         notifyItemChanged(this.index);
+    }
+
+    class ThisViewHolder extends RecyclerView.ViewHolder {
+        private FrameLayout flContent;
+        private TextView tvName;
+        private View vLine;
+
+        ThisViewHolder(View itemView) {
+            super(itemView);
+            flContent = itemView.findViewById(R.id.fl_content);
+            tvName = itemView.findViewById(R.id.tv_name);
+            vLine = itemView.findViewById(R.id.v_line);
+        }
     }
 }

@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#ffffff">
+    android:background="@color/background">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_ib_pre2"
+        android:background="@drawable/bg_ib_pre"
         android:clickable="true"
         android:paddingLeft="10dp"
-        android:id="@+id/fl_content">
+        android:id="@+id/fl_content"
+        android:focusable="true"
+        tools:ignore="RtlHardcoded,RtlSymmetry">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_height="90dp"
+            android:layout_marginBottom="6dp"
+            android:layout_marginTop="6dp"
             android:orientation="horizontal">
 
             <ImageView
@@ -24,7 +27,7 @@
                 android:layout_height="match_parent"
                 android:scaleType="fitCenter"
                 android:src="@drawable/img_cover_default"
-                android:transitionName="img_cover" />
+                android:contentDescription="@string/book" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -35,14 +38,14 @@
                     android:id="@+id/tv_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:ellipsize="end"
                     android:lines="1"
-                    android:text="斗破苍穹"
-                    android:textColor="#767676"
-                    android:textSize="16sp"
-                    android:layout_marginBottom="3dp"/>
+                    android:text="@string/app_name"
+                    android:textColor="@color/tv_text_default"
+                    android:textSize="16sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -54,61 +57,59 @@
                         android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
                         android:layout_weight="1"
-                        android:orientation="vertical">
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"/>
+                        android:orientation="vertical"
+                        tools:ignore="RtlHardcoded">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_marginBottom="3dp">
+                            android:layout_marginBottom="3dp"
+                            android:orientation="horizontal">
 
-                            <TextView
-                                android:id="@+id/tv_author"
-                                android:layout_width="wrap_content"
-                                android:maxWidth="90dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:lines="1"
-                                android:ellipsize="end"
-                                android:text="柳下惠"
-                                android:textColor="#aaaaaa"
-                                android:textSize="12sp" />
                             <TextView
                                 android:id="@+id/tv_origin"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="5dp"
-                                android:lines="1"
                                 android:ellipsize="end"
-                                android:textColor="#aaaaaa"
-                                android:textSize="10sp" />
+                                android:lines="1"
+                                android:text="来源"
+                                android:textColor="@color/tv_text_default"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/tv_origin_num"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="5dp"
+                                android:ellipsize="end"
+                                android:lines="1"
+                                android:textColor="@color/tv_text_default"
+                                android:textSize="12sp" />
                         </LinearLayout>
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"/>
+
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:orientation="horizontal">
+
                             <TextView
                                 android:id="@+id/tv_state"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
+                                android:layout_marginRight="5dp"
                                 android:background="@drawable/shape_search_history_roundrect"
                                 android:paddingBottom="0.4dp"
-                                android:layout_marginRight="5dp"
                                 android:paddingLeft="2dp"
                                 android:paddingRight="2dp"
                                 android:paddingTop="0.4dp"
                                 android:text="连载"
                                 android:textColor="#ffffff"
                                 android:textSize="12sp" />
+
                             <TextView
                                 android:id="@+id/tv_kind"
                                 android:layout_width="wrap_content"
@@ -124,6 +125,7 @@
                                 android:text="现代都市"
                                 android:textColor="#ffffff"
                                 android:textSize="12sp" />
+
                             <TextView
                                 android:id="@+id/tv_words"
                                 android:layout_width="wrap_content"
@@ -139,32 +141,31 @@
                                 android:textColor="#ffffff"
                                 android:textSize="12sp" />
                         </LinearLayout>
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"/>
+
                         <TextView
-                            android:id="@+id/tv_lastest"
+                            android:id="@+id/tv_lasted"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:ellipsize="end"
                             android:lines="1"
-                            android:text="最新章节:121章 成神"
-                            android:textColor="#767676"
+                            android:text="最新章节"
+                            android:textColor="@color/tv_text_default"
                             android:textSize="14sp" />
                     </LinearLayout>
+
                     <TextView
-                        android:id="@+id/tv_addshelf"
+                        android:id="@+id/tv_add_shelf"
                         android:layout_width="60dp"
                         android:layout_height="30dp"
                         android:layout_gravity="top"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:background="@drawable/selector_tv_addshelf"
+                        android:background="@drawable/selector_tv_first_button"
                         android:gravity="center"
                         android:lines="1"
                         android:text="+书架"
-                        android:textColor="@drawable/selector_tv_addshelf_text"
+                        android:textColor="@drawable/selector_tv_first_text"
                         android:textSize="14sp" />
                 </LinearLayout>
             </LinearLayout>

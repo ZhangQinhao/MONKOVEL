@@ -3,7 +3,6 @@ package com.monke.monkeybook.widget.refreshview;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +10,10 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.monke.monkeybook.R;
+import com.monke.monkeybook.bean.BookShelfBean;
 
 public abstract class RefreshRecyclerViewAdapter extends RecyclerView.Adapter {
-    private final int LOADMORETYPE = 2001;
+    private final int LOAD_MORE_TYPE = 2001;
 
     private Handler handler;
     private int isRequesting = 0;   //0是未执行网络请求  1是正在下拉刷新  2是正在加载更多
@@ -24,7 +24,14 @@ public abstract class RefreshRecyclerViewAdapter extends RecyclerView.Adapter {
     private OnClickTryAgainListener clickTryAgainListener;
 
     public interface OnClickTryAgainListener {
-        public void loadMoreErrorTryAgain();
+        void loadMoreErrorTryAgain();
+    }
+
+    public interface OnItemClickListener {
+
+        void onClick(BookShelfBean bookShelfBean, int index);
+
+        void onLongClick(View view, BookShelfBean bookShelfBean, int index);
     }
 
     public RefreshRecyclerViewAdapter(Boolean needLoadMore) {
@@ -45,20 +52,15 @@ public abstract class RefreshRecyclerViewAdapter extends RecyclerView.Adapter {
             if (Looper.myLooper() == Looper.getMainLooper()) {
                 notifyItemRangeChanged(getItemCount(), getItemCount() - getItemcount());
             } else {
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        notifyDataSetChanged();
-                    }
-                });
+                handler.post(() -> notifyDataSetChanged());
             }
         }
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == LOADMORETYPE) {
-            return new LoadMoreViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.view_refresh_loadmore, parent, false));
+        if (viewType == LOAD_MORE_TYPE) {
+            return new LoadMoreViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.view_refresh_load_more, parent, false));
         } else
             return onCreateViewholder(parent, viewType);
     }
@@ -67,20 +69,17 @@ public abstract class RefreshRecyclerViewAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
-        if (holder.getItemViewType() == LOADMORETYPE) {
+        if (holder.getItemViewType() == LOAD_MORE_TYPE) {
             if (!loadMoreError) {
                 ((LoadMoreViewHolder) holder).tvLoadMore.setText("正在加载...");
             } else {
                 ((LoadMoreViewHolder) holder).tvLoadMore.setText("加载失败,点击重试");
             }
-            ((LoadMoreViewHolder) holder).tvLoadMore.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (null != clickTryAgainListener && loadMoreError) {
-                        clickTryAgainListener.loadMoreErrorTryAgain();
-                        loadMoreError = false;
-                        ((LoadMoreViewHolder) holder).tvLoadMore.setText("正在加载...");
-                    }
+            ((LoadMoreViewHolder) holder).tvLoadMore.setOnClickListener(v -> {
+                if (null != clickTryAgainListener && loadMoreError) {
+                    clickTryAgainListener.loadMoreErrorTryAgain();
+                    loadMoreError = false;
+                    ((LoadMoreViewHolder) holder).tvLoadMore.setText("正在加载...");
                 }
             });
         } else
@@ -92,7 +91,7 @@ public abstract class RefreshRecyclerViewAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemViewType(int position) {
         if (needLoadMore && isRequesting != 1 && !isAll && position == getItemCount() - 1 && getItemcount() > 0) {
-            return LOADMORETYPE;
+            return LOAD_MORE_TYPE;
         } else {
             return getItemViewtype(position);
         }
@@ -114,18 +113,13 @@ public abstract class RefreshRecyclerViewAdapter extends RecyclerView.Adapter {
         this.isAll = isAll;
         if (needNoti) {
             if (Looper.myLooper() == Looper.getMainLooper()) {
-//                notifyItemRangeChanged(getItemCount(),getItemCount()-getItemcount());
+//                notifyItemRangeChanged(getItemCount(),getItemCount()-getItemCount());
                 if (getItemCount() > getItemcount()) {
                     notifyItemRangeChanged(getItemCount(), getItemCount() - getItemcount());
                 } else
                     notifyItemRemoved(getItemCount() + 1);
             } else {
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        notifyDataSetChanged();
-                    }
-                });
+                handler.post(() -> notifyDataSetChanged());
             }
         }
     }
@@ -136,8 +130,8 @@ public abstract class RefreshRecyclerViewAdapter extends RecyclerView.Adapter {
 
         public LoadMoreViewHolder(View itemView) {
             super(itemView);
-            llLoadMore = (FrameLayout) itemView.findViewById(R.id.ll_loadmore);
-            tvLoadMore = (TextView) itemView.findViewById(R.id.tv_loadmore);
+            llLoadMore = itemView.findViewById(R.id.ll_loadmore);
+            tvLoadMore = itemView.findViewById(R.id.tv_loadmore);
         }
     }
 
@@ -165,12 +159,7 @@ public abstract class RefreshRecyclerViewAdapter extends RecyclerView.Adapter {
             if (Looper.myLooper() == Looper.getMainLooper()) {
                 notifyDataSetChanged();
             } else {
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        notifyDataSetChanged();
-                    }
-                });
+                handler.post(() -> notifyDataSetChanged());
             }
         }
     }

@@ -1,10 +1,9 @@
 <resources>
-
     <!-- Base application theme. -->
-    <style name="CAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="CAppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">#ffffff</item>
-        <item name="colorPrimaryDark">#767676</item>
+        <item name="colorPrimary">@color/background</item>
+        <item name="colorPrimaryDark">@color/btn_bg_press_2</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
@@ -12,6 +11,12 @@
         <!-- Customize your theme here. -->
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
+        <item name="overlapAnchor">false</item>
     </style>
 
     <style name="anim_pop_checkaddshelf">
@@ -37,4 +42,24 @@
         <item name="android:windowEnterAnimation">@anim/anim_pop_windowmenumore_in</item>
         <item name="android:windowExitAnimation">@anim/anim_pop_windowmenumore_out</item>
     </style>
+
+    <declare-styleable name="CustomTextView">
+        <attr name="textStrokeColor" format="color" />
+        <attr name="textRadius" format="dimension" />
+        <attr name="textLeftTopRadius" format="dimension" />
+        <attr name="textLeftBottomRadius" format="dimension" />
+        <attr name="textRightTopRadius" format="dimension" />
+        <attr name="textRightBottomRadius" format="dimension" />
+        <attr name="textStrokeWidth" format="dimension" />
+        <attr name="textDrawable" format="reference" />
+        <attr name="textNormalTextColor" format="color" />
+        <attr name="textSelectedTextColor" format="color" />
+        <attr name="textNoLeftStroke" format="boolean"/>
+        <attr name="textNoRightStroke" format="boolean"/>
+        <attr name="textNoTopStroke" format="boolean"/>
+        <attr name="textNoBottomStroke" format="boolean"/>
+        <attr name="textPressedSolidColor" format="color"/>
+        <attr name="textNormalSolidColor" format="color"/>
+        <attr name="textIsSelected" format="boolean" />
+    </declare-styleable>
 </resources>

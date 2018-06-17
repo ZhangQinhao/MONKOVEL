@@ -1,6 +1,7 @@
 //Copyright (c) 2017. 章钦豪. All rights reserved.
 package com.monke.monkeybook.view.adapter;
 
+import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,16 +9,20 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.monke.monkeybook.R;
 import com.monke.monkeybook.bean.SearchBookBean;
 import com.monke.monkeybook.widget.refreshview.RefreshRecyclerViewAdapter;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ChoiceBookAdapter extends RefreshRecyclerViewAdapter {
+    private Activity activity;
     private List<SearchBookBean> searchBooks;
 
     public interface OnItemClickListener {
@@ -28,87 +33,79 @@ public class ChoiceBookAdapter extends RefreshRecyclerViewAdapter {
 
     private OnItemClickListener itemClickListener;
 
-    public ChoiceBookAdapter() {
+    public ChoiceBookAdapter(Activity activity) {
         super(true);
+        this.activity = activity;
         searchBooks = new ArrayList<>();
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewholder(ViewGroup parent, int viewType) {
-        return new Viewholder(LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_searchbook_item, parent, false));
+        return new MyViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_searchbook_item, parent, false));
     }
 
     @Override
     public void onBindViewholder(final RecyclerView.ViewHolder holder, final int position) {
-        final int realposition = position;
-        Glide.with(((Viewholder) holder).ivCover.getContext())
-                .load(searchBooks.get(realposition).getCoverUrl())
-                .diskCacheStrategy(DiskCacheStrategy.RESULT)
-                .fitCenter()
-                .dontAnimate()
-                .placeholder(R.drawable.img_cover_default)
-                .into(((Viewholder) holder).ivCover);
-        ((Viewholder) holder).tvName.setText(searchBooks.get(realposition).getName());
-        ((Viewholder) holder).tvAuthor.setText(searchBooks.get(realposition).getAuthor());
+        MyViewHolder myViewHolder = (MyViewHolder) holder;
+        if (!activity.isFinishing()) {
+            Glide.with(activity)
+                    .load(searchBooks.get(position).getCoverUrl())
+                    .apply(new RequestOptions()
+                            .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                            .fitCenter().dontAnimate()
+                            .placeholder(R.drawable.img_cover_default))
+                    .into(myViewHolder.ivCover);
+        }
+        myViewHolder.tvName.setText(String.format("%s(%s)", searchBooks.get(position).getName(), searchBooks.get(position).getAuthor()));
         String state = searchBooks.get(position).getState();
         if (state == null || state.length() == 0) {
-            ((Viewholder) holder).tvState.setVisibility(View.GONE);
+            myViewHolder.tvState.setVisibility(View.GONE);
         } else {
-            ((Viewholder) holder).tvState.setVisibility(View.VISIBLE);
-            ((Viewholder) holder).tvState.setText(state);
+            myViewHolder.tvState.setVisibility(View.VISIBLE);
+            myViewHolder.tvState.setText(state);
         }
-        long words = searchBooks.get(realposition).getWords();
+        long words = searchBooks.get(position).getWords();
         if (words <= 0) {
-            ((Viewholder) holder).tvWords.setVisibility(View.GONE);
+            myViewHolder.tvWords.setVisibility(View.GONE);
         } else {
             String wordsS = Long.toString(words) + "字";
             if (words > 10000) {
                 DecimalFormat df = new DecimalFormat("#.#");
                 wordsS = df.format(words * 1.0f / 10000f) + "万字";
             }
-            ((Viewholder) holder).tvWords.setVisibility(View.VISIBLE);
-            ((Viewholder) holder).tvWords.setText(wordsS);
+            myViewHolder.tvWords.setVisibility(View.VISIBLE);
+            myViewHolder.tvWords.setText(wordsS);
         }
-        String kind = searchBooks.get(realposition).getKind();
+        String kind = searchBooks.get(position).getKind();
         if (kind == null || kind.length() <= 0) {
-            ((Viewholder) holder).tvKind.setVisibility(View.GONE);
+            myViewHolder.tvKind.setVisibility(View.GONE);
         } else {
-            ((Viewholder) holder).tvKind.setVisibility(View.VISIBLE);
-            ((Viewholder) holder).tvKind.setText(kind);
+            myViewHolder.tvKind.setVisibility(View.VISIBLE);
+            myViewHolder.tvKind.setText(kind);
         }
-        if (searchBooks.get(realposition).getLastChapter() != null && searchBooks.get(realposition).getLastChapter().length() > 0)
-            ((Viewholder) holder).tvLastest.setText(searchBooks.get(realposition).getLastChapter());
-        else if (searchBooks.get(realposition).getDesc() != null && searchBooks.get(realposition).getDesc().length() > 0) {
-            ((Viewholder) holder).tvLastest.setText(searchBooks.get(realposition).getDesc());
+        if (searchBooks.get(position).getLastChapter() != null && searchBooks.get(position).getLastChapter().length() > 0)
+            myViewHolder.tvLasted.setText(searchBooks.get(position).getLastChapter());
+        else if (searchBooks.get(position).getDesc() != null && searchBooks.get(position).getDesc().length() > 0) {
+            myViewHolder.tvLasted.setText(searchBooks.get(position).getDesc());
         } else
-            ((Viewholder) holder).tvLastest.setText("");
-        if (searchBooks.get(realposition).getOrigin() != null && searchBooks.get(realposition).getOrigin().length() > 0) {
-            ((Viewholder) holder).tvOrigin.setVisibility(View.VISIBLE);
-            ((Viewholder) holder).tvOrigin.setText("来源:" + searchBooks.get(realposition).getOrigin());
+            myViewHolder.tvLasted.setText("");
+        if (searchBooks.get(position).getOrigin() != null && searchBooks.get(position).getOrigin().length() > 0) {
+            myViewHolder.tvOrigin.setVisibility(View.VISIBLE);
+            myViewHolder.tvOrigin.setText(String.format("来源:%s", searchBooks.get(position).getOrigin()));
         } else {
-            ((Viewholder) holder).tvOrigin.setVisibility(View.GONE);
-        }
-        if (searchBooks.get(realposition).getAdd()) {
-            ((Viewholder) holder).tvAddShelf.setText("已添加");
-            ((Viewholder) holder).tvAddShelf.setEnabled(false);
-        } else {
-            ((Viewholder) holder).tvAddShelf.setText("+添加");
-            ((Viewholder) holder).tvAddShelf.setEnabled(true);
+            myViewHolder.tvOrigin.setVisibility(View.GONE);
         }
 
-        ((Viewholder) holder).flContent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (itemClickListener != null)
-                    itemClickListener.clickItem(((Viewholder) holder).ivCover, realposition, searchBooks.get(realposition));
-            }
+        myViewHolder.tvAddShelf.setText("搜索");
+        myViewHolder.tvAddShelf.setEnabled(true);
+
+        myViewHolder.flContent.setOnClickListener(v -> {
+            if (itemClickListener != null)
+                itemClickListener.clickItem(myViewHolder.ivCover, position, searchBooks.get(position));
         });
-        ((Viewholder) holder).tvAddShelf.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (itemClickListener != null)
-                    itemClickListener.clickAddShelf(((Viewholder) holder).tvAddShelf, realposition, searchBooks.get(realposition));
-            }
+        myViewHolder.tvAddShelf.setOnClickListener(v -> {
+            if (itemClickListener != null)
+                itemClickListener.clickAddShelf(myViewHolder.tvAddShelf, position, searchBooks.get(position));
         });
     }
 
@@ -122,30 +119,28 @@ public class ChoiceBookAdapter extends RefreshRecyclerViewAdapter {
         return searchBooks.size();
     }
 
-    class Viewholder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder {
         FrameLayout flContent;
         ImageView ivCover;
         TextView tvName;
-        TextView tvAuthor;
         TextView tvState;
         TextView tvWords;
         TextView tvKind;
-        TextView tvLastest;
+        TextView tvLasted;
         TextView tvAddShelf;
         TextView tvOrigin;
 
-        public Viewholder(View itemView) {
+        MyViewHolder(View itemView) {
             super(itemView);
-            flContent = (FrameLayout) itemView.findViewById(R.id.fl_content);
-            ivCover = (ImageView) itemView.findViewById(R.id.iv_cover);
-            tvName = (TextView) itemView.findViewById(R.id.tv_name);
-            tvAuthor = (TextView) itemView.findViewById(R.id.tv_author);
-            tvState = (TextView) itemView.findViewById(R.id.tv_state);
-            tvWords = (TextView) itemView.findViewById(R.id.tv_words);
-            tvLastest = (TextView) itemView.findViewById(R.id.tv_lastest);
-            tvAddShelf = (TextView) itemView.findViewById(R.id.tv_addshelf);
-            tvKind = (TextView) itemView.findViewById(R.id.tv_kind);
-            tvOrigin = (TextView) itemView.findViewById(R.id.tv_origin);
+            flContent = itemView.findViewById(R.id.fl_content);
+            ivCover = itemView.findViewById(R.id.iv_cover);
+            tvName = itemView.findViewById(R.id.tv_name);
+            tvState = itemView.findViewById(R.id.tv_state);
+            tvWords = itemView.findViewById(R.id.tv_words);
+            tvLasted = itemView.findViewById(R.id.tv_lasted);
+            tvAddShelf = itemView.findViewById(R.id.tv_add_shelf);
+            tvKind = itemView.findViewById(R.id.tv_kind);
+            tvOrigin = itemView.findViewById(R.id.tv_origin);
         }
     }
 
@@ -156,7 +151,7 @@ public class ChoiceBookAdapter extends RefreshRecyclerViewAdapter {
     public void addAll(List<SearchBookBean> newData) {
         if (newData != null && newData.size() > 0) {
             int position = getItemcount();
-            if (newData != null && newData.size() > 0) {
+            if (newData.size() > 0) {
                 searchBooks.addAll(newData);
             }
             notifyItemInserted(position);

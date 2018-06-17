@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+
 import com.monke.monkeybook.R;
 
 public class CheckAddShelfPop extends PopupWindow{
@@ -21,15 +22,12 @@ public class CheckAddShelfPop extends PopupWindow{
     private OnItemClickListener itemClick;
     private String bookName;
 
-    private TextView tvBookName;
-    private TextView tvExit;
-    private TextView tvAddShelf;
     public CheckAddShelfPop(Context context,@NonNull String bookName,@NonNull OnItemClickListener itemClick){
         super(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
         mContext = context;
         this.bookName = bookName;
         this.itemClick = itemClick;
-        view = LayoutInflater.from(mContext).inflate(R.layout.view_pop_checkaddshelf,null);
+        view = LayoutInflater.from(mContext).inflate(R.layout.moprogress_dialog_two,null);
         this.setContentView(view);
 
         initView();
@@ -40,22 +38,16 @@ public class CheckAddShelfPop extends PopupWindow{
     }
 
     private void initView() {
-        tvBookName = (TextView) view.findViewById(R.id.tv_book_name);
-        tvBookName.setText(String.format(mContext.getString(R.string.tv_pop_checkaddshelf),bookName));
-        tvExit = (TextView) view.findViewById(R.id.tv_exit);
-        tvExit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-                itemClick.clickExit();
-            }
+        TextView tvBookName = view.findViewById(R.id.tv_msg);
+        tvBookName.setText(String.format(mContext.getString(R.string.check_add_bookshelf),bookName));
+        TextView tvExit = view.findViewById(R.id.tv_cancel);
+        tvExit.setText("退出阅读");
+        tvExit.setOnClickListener(v -> {
+            dismiss();
+            itemClick.clickExit();
         });
-        tvAddShelf = (TextView) view.findViewById(R.id.tv_addshelf);
-        tvAddShelf.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                itemClick.clickAddShelf();
-            }
-        });
+        TextView tvAddShelf = view.findViewById(R.id.tv_done);
+        tvAddShelf.setText("放入书架");
+        tvAddShelf.setOnClickListener(v -> itemClick.clickAddShelf());
     }
 }

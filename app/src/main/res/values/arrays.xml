@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="screen_direction_list_title">
+        <item>@string/screen_unspecified</item>
+        <item>@string/screen_portrait</item>
+        <item>@string/screen_sensor</item>
+    </string-array>
+
+    <string-array name="screen_direction_list_value">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="bookshelf_px_title">
+        <item>@string/bookshelf_px_0</item>
+        <item>@string/bookshelf_px_1</item>
+        <item>@string/bookshelf_px_2</item>
+    </string-array>
+
+    <string-array name="bookshelf_px_value">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="read_type_title">
+        <item>@string/horizontal_page_turning</item>
+        <item>@string/vertical_scroll</item>
+    </string-array>
+
+    <string-array name="read_type_value">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
+
+    <declare-styleable name="Battery">
+        <attr name="batteryOrientation">
+            <enum name="horizontal" value="0"/>
+            <enum name="vertical" value="1"/>
+        </attr>
+        <attr name="batteryColor" format="color"/>
+        <attr name="batteryPower" format="integer"/>
+    </declare-styleable>
+</resources>

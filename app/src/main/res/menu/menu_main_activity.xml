@@ -1,0 +1,54 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".view.activity.MainActivity">
+
+    <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_search_black_24dp_new"
+        android:title="@string/action_search"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_library"
+        android:icon="@drawable/ic_track_changes_black_24dp"
+        android:title="@string/find_on_www"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_add_local"
+        android:icon="@drawable/ic_add_black_24dp_new"
+        android:title="@string/book_local"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_add_url"
+        android:title="@string/add_book_url"
+        android:icon="@drawable/ic_add_black_24dp_new"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_download_all"
+        android:icon="@drawable/ic_download_black_24dp_new"
+        android:title="@string/download_all"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_download"
+        android:icon="@drawable/ic_download_black_24dp_new"
+        android:title="@string/action_download"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_list_grid"
+        android:icon="@drawable/ic_view_quilt_black_24dp_new"
+        android:title="@string/action_list_grid"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_change_icon"
+        android:icon="@drawable/ic_face_black_24dp_new"
+        android:title="@string/change_icon"
+        app:showAsAction="never" />
+
+</menu>
