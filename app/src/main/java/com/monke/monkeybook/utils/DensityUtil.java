@@ -84,7 +84,18 @@ public class DensityUtil {
     public static int getWindowWidth(Context context){
         WindowManager wm = (WindowManager) context
                 .getSystemService(Context.WINDOW_SERVICE);
-        int width = wm.getDefaultDisplay().getWidth();
+        DisplayMetrics dm = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(dm);
+        int width = dm.widthPixels;
         return width;
+    }
+
+    public static int getWindowHeight(Context context){
+        WindowManager wm = (WindowManager) context
+                .getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics dm = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(dm);
+        int height = dm.heightPixels;
+        return height;
     }
 }
