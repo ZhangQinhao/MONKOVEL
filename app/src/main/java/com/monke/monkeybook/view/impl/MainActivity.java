@@ -21,12 +21,14 @@ import com.monke.monkeybook.presenter.impl.MainPresenterImpl;
 import com.monke.monkeybook.view.IMainView;
 import com.monke.monkeybook.view.adapter.BookShelfAdapter;
 import com.monke.monkeybook.view.popupwindow.DownloadListPop;
+import com.monke.monkeybook.view.popupwindow.ProxyPop;
 import com.monke.monkeybook.widget.refreshview.OnRefreshWithProgressListener;
 import com.monke.monkeybook.widget.refreshview.RefreshRecyclerView;
 
 import java.util.List;
 
 public class MainActivity extends MBaseActivity<IMainPresenter> implements IMainView {
+    private ImageView ivLogo;
     private ImageButton ibMoney;
     private ImageButton ibLibrary;
     private ImageButton ibAdd;
@@ -39,6 +41,7 @@ public class MainActivity extends MBaseActivity<IMainPresenter> implements IMain
     private ImageView ivWarnClose;
 
     private DownloadListPop downloadListPop;
+    private ProxyPop proxyPop;
 
     @Override
     protected IMainPresenter initInjector() {
@@ -62,8 +65,10 @@ public class MainActivity extends MBaseActivity<IMainPresenter> implements IMain
 
     @Override
     protected void bindView() {
+        proxyPop = new ProxyPop(MainActivity.this);
         downloadListPop = new DownloadListPop(MainActivity.this);
 
+        ivLogo = findViewById(R.id.iv_logo);
         rfRvShelf = (RefreshRecyclerView) findViewById(R.id.rf_rv_shelf);
 
         ibMoney = (ImageButton) findViewById(R.id.ib_money);
@@ -80,6 +85,12 @@ public class MainActivity extends MBaseActivity<IMainPresenter> implements IMain
     @Override
     protected void bindEvent() {
         bindRvShelfEvent();
+        ivLogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                proxyPop.showAsDropDown(ivLogo);
+            }
+        });
         ibDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

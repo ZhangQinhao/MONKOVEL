@@ -28,6 +28,7 @@ public class MApplication extends Application {
             MobclickAgent.startWithConfigure(new MobclickAgent.UMAnalyticsConfig(this, getString(R.string.umeng_key), channel, MobclickAgent.EScenarioType.E_UM_NORMAL, true));
         }
         instance = this;
+        ProxyManager.initProxy();
         startService(new Intent(this, DownloadService.class));
     }
 

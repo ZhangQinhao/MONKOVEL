@@ -44,7 +44,7 @@ public class DownloadListPop extends PopupWindow {
     private TextView tvDownload;
 
     public DownloadListPop(Context context) {
-        super(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        super(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         mContext = context;
         view = LayoutInflater.from(mContext).inflate(R.layout.view_pop_downloadlist, null);
         this.setContentView(view);

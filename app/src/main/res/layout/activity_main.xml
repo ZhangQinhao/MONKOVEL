@@ -20,7 +20,7 @@
             <ImageView
                 android:id="@+id/iv_logo"
                 android:layout_width="119dp"
-                android:layout_height="21dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="15dp"
                 android:src="@drawable/icon_monkovel_black" />
