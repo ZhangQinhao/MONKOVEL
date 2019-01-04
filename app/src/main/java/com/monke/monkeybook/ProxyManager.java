@@ -1,8 +1,11 @@
 package com.monke.monkeybook;
 
 import android.content.SharedPreferences;
+
 import com.monke.monkeybook.utils.AESUtil;
+
 import org.jsoup.helper.StringUtil;
+
 import java.util.regex.Pattern;
 
 public class ProxyManager {
@@ -16,47 +19,48 @@ public class ProxyManager {
     private static final String proxyHttpMatch = "(http|ftp|https):\\/\\/[\\w\\-_]+(\\.[\\w\\-_]+)+([\\w\\-\\.,@?^=%&amp;:/~\\+#]*[\\w\\-\\@?^=%&amp;/~\\+#])?";//http正则表达式
     private static final String proxyPackageNameEncode = "代理包名加密key";
     public static String packAgeEncode; //加密后的包名
-    public static void saveProxyState(boolean state){
+
+    public static void saveProxyState(boolean state) {
         proxyState = state;
         SharedPreferences.Editor editor = MApplication.getInstance().getSharedPreferences("CONFIG", 0).edit();
-        editor.putBoolean(SP_KEY_PROXY_STATE,proxyState);
+        editor.putBoolean(SP_KEY_PROXY_STATE, proxyState);
         editor.commit();
     }
 
-    private static void initProxyState(){
+    private static void initProxyState() {
         try {
-            packAgeEncode = AESUtil.aesEncode(MApplication.getInstance().getPackageManager().getPackageInfo(MApplication.getInstance().getPackageName(), 0).packageName,proxyPackageNameEncode);
+            packAgeEncode = AESUtil.aesEncode(MApplication.getInstance().getPackageManager().getPackageInfo(MApplication.getInstance().getPackageName(), 0).packageName, proxyPackageNameEncode);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("=================包名获取失败，可能会影响代理请求功能===========");
         }
-        proxyState = MApplication.getInstance().getSharedPreferences("CONFIG", 0).getBoolean(SP_KEY_PROXY_STATE,PROXY_STATE_DEFAULT);
+        proxyState = MApplication.getInstance().getSharedPreferences("CONFIG", 0).getBoolean(SP_KEY_PROXY_STATE, PROXY_STATE_DEFAULT);
     }
 
-    public static void saveProxyHttp(String http){
+    public static void saveProxyHttp(String http) {
         proxyHttp = http;
         SharedPreferences.Editor editor = MApplication.getInstance().getSharedPreferences("CONFIG", 0).edit();
-        editor.putString(SP_KEY_PROXY_HTTP,proxyHttp);
+        editor.putString(SP_KEY_PROXY_HTTP, proxyHttp);
         editor.commit();
     }
 
-    private static void initProxyHttp(){
-        proxyHttp = MApplication.getInstance().getSharedPreferences("CONFIG", 0).getString(SP_KEY_PROXY_HTTP,PROXY_HTTP_DEFAULT);
+    private static void initProxyHttp() {
+        proxyHttp = MApplication.getInstance().getSharedPreferences("CONFIG", 0).getString(SP_KEY_PROXY_HTTP, PROXY_HTTP_DEFAULT);
     }
 
-    public static void initProxy(){
+    public static void initProxy() {
         initProxyHttp();
         initProxyState();
     }
 
-    public static boolean hasProxy(){
-        if(!proxyState){
+    public static boolean hasProxy() {
+        if (!proxyState) {
             return false;
         }
         Pattern pattern = Pattern.compile(proxyHttpMatch);
-        if(!StringUtil.isBlank(proxyHttp) && pattern.matcher(proxyHttp).matches()){
+        if (!StringUtil.isBlank(proxyHttp) && pattern.matcher(proxyHttp).matches()) {
             return true;
-        }else{
+        } else {
             saveProxyState(false);
             return false;
         }
