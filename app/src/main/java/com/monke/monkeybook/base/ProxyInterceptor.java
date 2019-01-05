@@ -13,13 +13,19 @@ import okhttp3.Response;
 
 public class ProxyInterceptor implements Interceptor {
     public ProxyInterceptor() {
-
     }
 
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
+        Response response = request(chain,request);
+        return response;
+    }
+
+    private Response request(Chain chain,Request request) throws IOException{
+        Response response = null;
         if (ProxyManager.hasProxy()) {  //如果是代理模式则优先请求代理服务器，失败再自行本地请求
+            Request requestProxy = null;
             String url = request.url().toString();
             if (!StringUtil.isBlank(url)) {
                 url = URLEncoder.encode(url, "utf-8");
@@ -34,12 +40,22 @@ public class ProxyInterceptor implements Interceptor {
             }else{
                 requestProxyBuilder.post(request.body());
             }
-            Response responseProxy = chain.proceed(requestProxyBuilder.build());
-            if(responseProxy.isSuccessful()){
-                return responseProxy;
+            requestProxy = requestProxyBuilder.build();
+            try{
+                response = chain.proceed(requestProxy);
+                if(response.isSuccessful()){
+                    return response;
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }finally {
+                if(response!=null){
+                    response.close();
+                    response = null;
+                }
             }
         }
-        Response response = chain.proceed(request);
+        response = chain.proceed(request);
         return response;
     }
 }

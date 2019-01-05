@@ -15,7 +15,7 @@ public class BaseModelImpl {
             .connectTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)
             .readTimeout(10, TimeUnit.SECONDS)
-            .addInterceptor(new RetryIntercepter(1));
+            .addNetworkInterceptor(new RetryIntercepter(1));
 
     protected Retrofit getRetrofitObject(String url) {
         return new Retrofit.Builder().baseUrl(url)

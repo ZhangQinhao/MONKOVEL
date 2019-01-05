@@ -15,8 +15,7 @@ public class MBaseModelImpl {
             .connectTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)
             .readTimeout(10, TimeUnit.SECONDS)
-            .addNetworkInterceptor(new ProxyInterceptor())
-            .addInterceptor(new RetryIntercepter(1));
+            .addInterceptor(new ProxyInterceptor());
 
     protected Retrofit getRetrofitObject(String url) {
         return new Retrofit.Builder().baseUrl(url)
