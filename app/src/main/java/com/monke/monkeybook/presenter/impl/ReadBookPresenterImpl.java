@@ -94,13 +94,13 @@ public class ReadBookPresenterImpl extends BasePresenterImpl<IBookReadView> impl
         mView.showLoadBook();
         getRealFilePath(activity, uri)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .subscribe(new SimpleObserver<String>() {
                     @Override
                     public void onNext(String value) {
                         ImportBookModelImpl.getInstance().importBook(new File(value))
                                 .observeOn(AndroidSchedulers.mainThread())
-                                .subscribeOn(Schedulers.newThread())
+                                .subscribeOn(Schedulers.io())
                                 .subscribe(new SimpleObserver<LocBookShelfBean>() {
                                     @Override
                                     public void onNext(LocBookShelfBean value) {
@@ -211,7 +211,7 @@ public class ReadBookPresenterImpl extends BasePresenterImpl<IBookReadView> impl
                         e.onComplete();
                     }
                 }).observeOn(AndroidSchedulers.mainThread())
-                        .subscribeOn(Schedulers.newThread())
+                        .subscribeOn(Schedulers.io())
                         .compose(((BaseActivity) mView.getContext()).<ReadBookContentBean>bindUntilEvent(ActivityEvent.DESTROY))
                         .subscribe(new SimpleObserver<ReadBookContentBean>() {
                             @Override
@@ -233,7 +233,7 @@ public class ReadBookPresenterImpl extends BasePresenterImpl<IBookReadView> impl
                                         }
                                     })
                                             .observeOn(AndroidSchedulers.mainThread())
-                                            .subscribeOn(Schedulers.newThread())
+                                            .subscribeOn(Schedulers.io())
                                             .compose(((BaseActivity) mView.getContext()).<BookContentBean>bindUntilEvent(ActivityEvent.DESTROY))
                                             .subscribe(new SimpleObserver<BookContentBean>() {
                                                 @Override
@@ -287,7 +287,7 @@ public class ReadBookPresenterImpl extends BasePresenterImpl<IBookReadView> impl
                     e.onNext(bookShelf);
                     e.onComplete();
                 }
-            }).subscribeOn(Schedulers.newThread())
+            }).subscribeOn(Schedulers.io())
                     .subscribe(new SimpleObserver<BookShelfBean>() {
                         @Override
                         public void onNext(BookShelfBean value) {

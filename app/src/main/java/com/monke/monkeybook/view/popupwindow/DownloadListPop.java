@@ -113,8 +113,8 @@ public class DownloadListPop extends PopupWindow {
                 e.onComplete();
             }
         })
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(Schedulers.io())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SimpleObserver<DownloadChapterBean>() {
                     @Override
                     public void onNext(DownloadChapterBean value) {

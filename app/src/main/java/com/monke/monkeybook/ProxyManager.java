@@ -17,8 +17,8 @@ public class ProxyManager {
     public static boolean proxyState;
     public static String proxyHttp;
     private static final String proxyHttpMatch = "(http|ftp|https):\\/\\/[\\w\\-_]+(\\.[\\w\\-_]+)+([\\w\\-\\.,@?^=%&amp;:/~\\+#]*[\\w\\-\\@?^=%&amp;/~\\+#])?";//http正则表达式
-    private static final String proxyPackageNameEncode = "代理包名加密key";
-    public static String packAgeEncode; //加密后的包名
+    private static final String proxyPackageNameEncode = "代理包名加密key";   //代理包名加密key
+    public static String packageEncode; //加密后的包名
 
     public static void saveProxyState(boolean state) {
         proxyState = state;
@@ -29,10 +29,10 @@ public class ProxyManager {
 
     private static void initProxyState() {
         try {
-            packAgeEncode = AESUtil.aesEncode(MApplication.getInstance().getPackageManager().getPackageInfo(MApplication.getInstance().getPackageName(), 0).packageName, proxyPackageNameEncode);
+            packageEncode = AESUtil.aesEncode(MApplication.getInstance().getPackageManager().getPackageInfo(MApplication.getInstance().getPackageName(), 0).packageName, proxyPackageNameEncode);
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("=================包名获取失败，可能会影响代理请求功能===========");
+            System.out.println("=================包名获取失败，可能会影响代理请求功能=================");
         }
         proxyState = MApplication.getInstance().getSharedPreferences("CONFIG", 0).getBoolean(SP_KEY_PROXY_STATE, PROXY_STATE_DEFAULT);
     }
@@ -51,6 +51,7 @@ public class ProxyManager {
     public static void initProxy() {
         initProxyHttp();
         initProxyState();
+        hasProxy();
     }
 
     public static boolean hasProxy() {

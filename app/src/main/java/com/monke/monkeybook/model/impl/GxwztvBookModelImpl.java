@@ -237,7 +237,7 @@ public class GxwztvBookModelImpl extends MBaseModelImpl implements IGxwztvBookMo
                 return analyChapterList(s, bookShelfBean);
             }
         })
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SimpleObserver<WebChapterBean<BookShelfBean>>() {
                     @Override

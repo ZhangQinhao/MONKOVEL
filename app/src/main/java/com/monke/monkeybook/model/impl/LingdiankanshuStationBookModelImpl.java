@@ -143,7 +143,7 @@ public class LingdiankanshuStationBookModelImpl extends MBaseModelImpl implement
                 return analyChapterList(s, bookShelfBean);
             }
         })
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SimpleObserver<WebChapterBean<BookShelfBean>>() {
                     @Override
