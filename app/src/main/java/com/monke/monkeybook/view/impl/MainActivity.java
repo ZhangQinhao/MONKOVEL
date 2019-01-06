@@ -30,6 +30,7 @@ import java.util.List;
 public class MainActivity extends MBaseActivity<IMainPresenter> implements IMainView {
     private ImageView ivLogo;
     private ImageButton ibMoney;
+    private ImageButton ibSettings;
     private ImageButton ibLibrary;
     private ImageButton ibAdd;
     private ImageButton ibDownload;
@@ -72,6 +73,7 @@ public class MainActivity extends MBaseActivity<IMainPresenter> implements IMain
         rfRvShelf = (RefreshRecyclerView) findViewById(R.id.rf_rv_shelf);
 
         ibMoney = (ImageButton) findViewById(R.id.ib_money);
+        ibSettings = findViewById(R.id.ib_settings);
         ibLibrary = (ImageButton) findViewById(R.id.ib_library);
         ibAdd = (ImageButton) findViewById(R.id.ib_add);
         ibDownload = (ImageButton) findViewById(R.id.ib_download);
@@ -85,10 +87,10 @@ public class MainActivity extends MBaseActivity<IMainPresenter> implements IMain
     @Override
     protected void bindEvent() {
         bindRvShelfEvent();
-        ivLogo.setOnClickListener(new View.OnClickListener() {
+        ibSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                proxyPop.showAsDropDown(ivLogo);
+                proxyPop.showAsDropDown(ibSettings);
             }
         });
         ibDownload.setOnClickListener(new View.OnClickListener() {

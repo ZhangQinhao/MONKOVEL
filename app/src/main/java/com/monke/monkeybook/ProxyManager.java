@@ -2,7 +2,7 @@ package com.monke.monkeybook;
 
 import android.content.SharedPreferences;
 
-import com.monke.monkeybook.utils.AESUtil;
+import com.monke.monkeybook.utils.aes.AESUtil;
 
 import org.jsoup.helper.StringUtil;
 
