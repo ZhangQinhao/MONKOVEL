@@ -29,7 +29,7 @@ public class ProxyInterceptor implements Interceptor {
                 oldUrl = URLEncoder.encode(oldUrl, "utf-8");
             }
             try{
-                String key = AESUtil.aesEncode(ProxyManager.packageName+ProxyManager.PROXY_PACKAGENAME_SPILT+UUID.randomUUID().toString()+System.currentTimeMillis(),ProxyManager.PROXY_PACKAGENAME_ENCODE);
+                String key = AESUtil.aesEncode(ProxyManager.packageName+UUID.randomUUID().toString()+System.currentTimeMillis(),ProxyManager.PROXY_PACKAGENAME_ENCODE);
                 HttpUrl newBaseUrl = HttpUrl.parse(ProxyManager.proxyHttp).newBuilder()
                         .setQueryParameter("proxyUrl",oldUrl)
                         .setQueryParameter("proxyPackagename",key)

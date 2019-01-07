@@ -16,7 +16,6 @@ public class ProxyManager {
     public static String proxyHttp;
     private static final String PROXY_HTTP_MATCH = "(http|ftp|https):\\/\\/[\\w\\-_]+(\\.[\\w\\-_]+)+([\\w\\-\\.,@?^=%&amp;:/~\\+#]*[\\w\\-\\@?^=%&amp;/~\\+#])?";//http正则表达式
     public static final String PROXY_PACKAGENAME_ENCODE = "代理包名加密key";   //代理包名加密key
-    public static final String PROXY_PACKAGENAME_SPILT = "*"; //加密分隔符
     public static String packageName; //加密后的包名
 
     public static void saveProxyState(boolean state) {
