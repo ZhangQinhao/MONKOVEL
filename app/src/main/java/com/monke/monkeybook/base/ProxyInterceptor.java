@@ -28,17 +28,23 @@ public class ProxyInterceptor implements Interceptor {
             if (!StringUtil.isBlank(oldUrl)) {
                 oldUrl = URLEncoder.encode(oldUrl, "utf-8");
             }
-            try{
-                String key = AESUtil.aesEncode(ProxyManager.packageName+UUID.randomUUID().toString()+System.currentTimeMillis(),ProxyManager.PROXY_PACKAGENAME_ENCODE);
+            try {
+                String temp = ProxyManager.packageName + UUID.randomUUID().toString() + System.currentTimeMillis();
+                String key = AESUtil.aesEncode(temp.trim(), ProxyManager.PROXY_PACKAGENAME_ENCODE);
+                try {
+                    key = URLEncoder.encode(key,"utf-8");
+                } catch (Exception e) {
+                    key = temp.trim();
+                }
                 HttpUrl newBaseUrl = HttpUrl.parse(ProxyManager.proxyHttp).newBuilder()
-                        .setQueryParameter("proxyUrl",oldUrl)
-                        .setQueryParameter("proxyPackagename",key)
+                        .setQueryParameter("proxyUrl", oldUrl)
+                        .setQueryParameter("proxyPackagename", key)
                         .build();
                 Response response = chain.proceed(builder.url(newBaseUrl).build());
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     return response;
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
 
             }
         }
