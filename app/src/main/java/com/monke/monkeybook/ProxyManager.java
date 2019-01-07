@@ -2,8 +2,6 @@ package com.monke.monkeybook;
 
 import android.content.SharedPreferences;
 
-import com.monke.monkeybook.utils.aes.AESUtil;
-
 import org.jsoup.helper.StringUtil;
 
 import java.util.regex.Pattern;
@@ -16,9 +14,10 @@ public class ProxyManager {
 
     public static boolean proxyState;
     public static String proxyHttp;
-    private static final String proxyHttpMatch = "(http|ftp|https):\\/\\/[\\w\\-_]+(\\.[\\w\\-_]+)+([\\w\\-\\.,@?^=%&amp;:/~\\+#]*[\\w\\-\\@?^=%&amp;/~\\+#])?";//http正则表达式
-    private static final String proxyPackageNameEncode = "代理包名加密key";   //代理包名加密key
-    public static String packageEncode; //加密后的包名
+    private static final String PROXY_HTTP_MATCH = "(http|ftp|https):\\/\\/[\\w\\-_]+(\\.[\\w\\-_]+)+([\\w\\-\\.,@?^=%&amp;:/~\\+#]*[\\w\\-\\@?^=%&amp;/~\\+#])?";//http正则表达式
+    public static final String PROXY_PACKAGENAME_ENCODE = "代理包名加密key";   //代理包名加密key
+    public static final String PROXY_PACKAGENAME_SPILT = "*"; //加密分隔符
+    public static String packageName; //加密后的包名
 
     public static void saveProxyState(boolean state) {
         proxyState = state;
@@ -29,7 +28,7 @@ public class ProxyManager {
 
     private static void initProxyState() {
         try {
-            packageEncode = AESUtil.aesEncode(MApplication.getInstance().getPackageManager().getPackageInfo(MApplication.getInstance().getPackageName(), 0).packageName, proxyPackageNameEncode);
+            packageName = MApplication.getInstance().getPackageManager().getPackageInfo(MApplication.getInstance().getPackageName(), 0).packageName;
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("=================包名获取失败，可能会影响代理请求功能=================");
@@ -58,7 +57,7 @@ public class ProxyManager {
         if (!proxyState) {
             return false;
         }
-        Pattern pattern = Pattern.compile(proxyHttpMatch);
+        Pattern pattern = Pattern.compile(PROXY_HTTP_MATCH);
         if (!StringUtil.isBlank(proxyHttp) && pattern.matcher(proxyHttp).matches()) {
             return true;
         } else {

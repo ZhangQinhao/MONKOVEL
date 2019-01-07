@@ -1,11 +1,13 @@
 package com.monke.monkeybook.base;
 
 import com.monke.monkeybook.ProxyManager;
+import com.monke.monkeybook.utils.aes.AESUtil;
 
 import org.jsoup.helper.StringUtil;
 
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.UUID;
 
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
@@ -26,11 +28,12 @@ public class ProxyInterceptor implements Interceptor {
             if (!StringUtil.isBlank(oldUrl)) {
                 oldUrl = URLEncoder.encode(oldUrl, "utf-8");
             }
-            HttpUrl newBaseUrl = HttpUrl.parse(ProxyManager.proxyHttp).newBuilder()
-                    .setQueryParameter("proxyUrl",oldUrl)
-                    .setQueryParameter("proxyPackagename",ProxyManager.packageEncode)
-                    .build();
             try{
+                String key = AESUtil.aesEncode(ProxyManager.packageName+ProxyManager.PROXY_PACKAGENAME_SPILT+UUID.randomUUID().toString()+System.currentTimeMillis(),ProxyManager.PROXY_PACKAGENAME_ENCODE);
+                HttpUrl newBaseUrl = HttpUrl.parse(ProxyManager.proxyHttp).newBuilder()
+                        .setQueryParameter("proxyUrl",oldUrl)
+                        .setQueryParameter("proxyPackagename",key)
+                        .build();
                 Response response = chain.proceed(builder.url(newBaseUrl).build());
                 if(response.isSuccessful()) {
                     return response;

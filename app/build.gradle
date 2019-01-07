@@ -9,8 +9,8 @@ android {
         applicationId "com.monke.monkeybook"
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 15
-        versionName "1.3.5"
+        versionCode 16
+        versionName "1.3.6"
         manifestPlaceholders = [UMENG_CHANNEL_VALUE: "pugongying"]
     }
 
