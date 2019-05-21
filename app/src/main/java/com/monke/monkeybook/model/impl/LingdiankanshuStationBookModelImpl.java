@@ -1,8 +1,8 @@
 //Copyright (c) 2017. 章钦豪. All rights reserved.
 package com.monke.monkeybook.model.impl;
 
-import com.monke.basemvplib.impl.BaseModelImpl;
 import com.monke.monkeybook.ErrorAnalyContentManager;
+import com.monke.monkeybook.base.MBaseModelImpl;
 import com.monke.monkeybook.base.observer.SimpleObserver;
 import com.monke.monkeybook.bean.BookContentBean;
 import com.monke.monkeybook.bean.BookInfoBean;
@@ -28,7 +28,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
-public class LingdiankanshuStationBookModelImpl extends BaseModelImpl implements IStationBookModel {
+public class LingdiankanshuStationBookModelImpl extends MBaseModelImpl implements IStationBookModel {
     public static final String TAG = "http://www.lingdiankanshu.co";
 
     public static LingdiankanshuStationBookModelImpl getInstance() {
@@ -143,7 +143,7 @@ public class LingdiankanshuStationBookModelImpl extends BaseModelImpl implements
                 return analyChapterList(s, bookShelfBean);
             }
         })
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SimpleObserver<WebChapterBean<BookShelfBean>>() {
                     @Override

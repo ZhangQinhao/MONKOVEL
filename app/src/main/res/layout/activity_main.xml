@@ -20,7 +20,7 @@
             <ImageView
                 android:id="@+id/iv_logo"
                 android:layout_width="119dp"
-                android:layout_height="21dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="15dp"
                 android:src="@drawable/icon_monkovel_black" />
@@ -35,37 +35,57 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center_vertical"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 android:layout_marginRight="5dp"
                 android:background="@drawable/bg_ib_pre"
                 android:src="@drawable/selector_iv_money"
+                android:scaleType="fitCenter"
                 android:visibility="gone" />
-            <ImageButton
-                android:id="@+id/ib_download"
-                android:layout_width="44dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="3dp"
-                android:background="@drawable/bg_ib_pre"
-                android:src="@drawable/selector_icon_donwload_main"
-                android:transitionName="ic_search" />
             <ImageButton
                 android:id="@+id/ib_library"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center_vertical"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 android:layout_marginRight="5dp"
                 android:background="@drawable/bg_ib_pre"
-                android:src="@drawable/selector_iv_library"
-                android:transitionName="ic_search" />
-
+                android:scaleType="fitCenter"
+                android:src="@drawable/selector_iv_library"/>
             <ImageButton
                 android:id="@+id/ib_add"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="5dp"
                 android:background="@drawable/bg_ib_pre"
+                android:scaleType="fitCenter"
                 android:src="@drawable/selector_iv_add" />
+            <ImageButton
+                android:id="@+id/ib_download"
+                android:layout_width="44dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/bg_ib_pre"
+                android:scaleType="fitCenter"
+                android:src="@drawable/selector_icon_donwload_main"/>
+            <ImageButton
+                android:id="@+id/ib_settings"
+                android:layout_width="44dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:paddingTop="9dp"
+                android:paddingBottom="9dp"
+                android:layout_marginRight="5dp"
+                android:scaleType="fitCenter"
+                android:background="@drawable/bg_ib_pre"
+                android:src="@drawable/selector_icon_setting_main"/>
         </LinearLayout>
 
         <com.monke.monkeybook.widget.refreshview.RefreshRecyclerView

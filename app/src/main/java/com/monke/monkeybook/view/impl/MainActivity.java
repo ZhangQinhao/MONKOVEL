@@ -10,9 +10,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
-
-import com.baidu.autoupdatesdk.BDAutoUpdateSDK;
-import com.baidu.autoupdatesdk.UICheckUpdateCallback;
 import com.monke.monkeybook.BitIntentDataManager;
 import com.monke.monkeybook.R;
 import com.monke.monkeybook.base.MBaseActivity;
@@ -24,13 +21,16 @@ import com.monke.monkeybook.presenter.impl.MainPresenterImpl;
 import com.monke.monkeybook.view.IMainView;
 import com.monke.monkeybook.view.adapter.BookShelfAdapter;
 import com.monke.monkeybook.view.popupwindow.DownloadListPop;
+import com.monke.monkeybook.view.popupwindow.ProxyPop;
 import com.monke.monkeybook.widget.refreshview.OnRefreshWithProgressListener;
 import com.monke.monkeybook.widget.refreshview.RefreshRecyclerView;
 
 import java.util.List;
 
 public class MainActivity extends MBaseActivity<IMainPresenter> implements IMainView {
+    private ImageView ivLogo;
     private ImageButton ibMoney;
+    private ImageButton ibSettings;
     private ImageButton ibLibrary;
     private ImageButton ibAdd;
     private ImageButton ibDownload;
@@ -42,6 +42,7 @@ public class MainActivity extends MBaseActivity<IMainPresenter> implements IMain
     private ImageView ivWarnClose;
 
     private DownloadListPop downloadListPop;
+    private ProxyPop proxyPop;
 
     @Override
     protected IMainPresenter initInjector() {
@@ -65,11 +66,14 @@ public class MainActivity extends MBaseActivity<IMainPresenter> implements IMain
 
     @Override
     protected void bindView() {
+        proxyPop = new ProxyPop(MainActivity.this);
         downloadListPop = new DownloadListPop(MainActivity.this);
 
+        ivLogo = findViewById(R.id.iv_logo);
         rfRvShelf = (RefreshRecyclerView) findViewById(R.id.rf_rv_shelf);
 
         ibMoney = (ImageButton) findViewById(R.id.ib_money);
+        ibSettings = findViewById(R.id.ib_settings);
         ibLibrary = (ImageButton) findViewById(R.id.ib_library);
         ibAdd = (ImageButton) findViewById(R.id.ib_add);
         ibDownload = (ImageButton) findViewById(R.id.ib_download);
@@ -83,6 +87,12 @@ public class MainActivity extends MBaseActivity<IMainPresenter> implements IMain
     @Override
     protected void bindEvent() {
         bindRvShelfEvent();
+        ibSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                proxyPop.showAsDropDown(ibSettings);
+            }
+        });
         ibDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -165,22 +175,6 @@ public class MainActivity extends MBaseActivity<IMainPresenter> implements IMain
 
     @Override
     protected void firstRequest() {
-        //通过百度API 判断是否有更新
-        try {
-            BDAutoUpdateSDK.uiUpdateAction(this, new UICheckUpdateCallback() {
-                @Override
-                public void onNoUpdateFound() {
-
-                }
-
-                @Override
-                public void onCheckComplete() {
-
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         mPresenter.queryBookShelf(false);
     }
 

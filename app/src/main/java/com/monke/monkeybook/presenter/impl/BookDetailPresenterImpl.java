@@ -30,7 +30,9 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.ObservableSource;
+import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
@@ -108,12 +110,14 @@ public class BookDetailPresenterImpl extends BasePresenterImpl<IBookDetailView> 
                 for(int i=0;i<bookShelfs.size();i++){
                     if(bookShelfs.get(i).getNoteUrl().equals(bookShelfBean.getNoteUrl())){
                         inBookShelf = true;
+                        bookShelfBean.setDurChapter(bookShelfs.get(i).getDurChapter());
+                        bookShelfBean.setDurChapterPage(bookShelfs.get(i).getDurChapterPage());
                         break;
                     }
                 }
                 return bookShelfBean;
             }
-        }).subscribeOn(Schedulers.newThread())
+        }).subscribeOn(Schedulers.io())
                 .compose(((BaseActivity)mView.getContext()).<BookShelfBean>bindUntilEvent(ActivityEvent.DESTROY))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SimpleObserver<BookShelfBean>() {
@@ -155,7 +159,7 @@ public class BookDetailPresenterImpl extends BasePresenterImpl<IBookDetailView> 
                     e.onNext(true);
                     e.onComplete();
                 }
-            }).subscribeOn(Schedulers.newThread())
+            }).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .compose(((BaseActivity)mView.getContext()).<Boolean>bindUntilEvent(ActivityEvent.DESTROY))
                     .subscribe(new SimpleObserver<Boolean>() {
@@ -196,7 +200,7 @@ public class BookDetailPresenterImpl extends BasePresenterImpl<IBookDetailView> 
                     e.onNext(true);
                     e.onComplete();
                 }
-            }).subscribeOn(Schedulers.newThread())
+            }).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .compose(((BaseActivity)mView.getContext()).<Boolean>bindUntilEvent(ActivityEvent.DESTROY))
                     .subscribe(new SimpleObserver<Boolean>() {
@@ -284,5 +288,35 @@ public class BookDetailPresenterImpl extends BasePresenterImpl<IBookDetailView> 
             }
             mView.updateView();
         }
+    }
+
+    public static void main(String[] args) {
+        final BookShelfBean bookShelfResult = new BookShelfBean();
+        bookShelfResult.setNoteUrl("http://www.gxwztv.com/ba598.shtml");
+        bookShelfResult.setFinalDate(System.currentTimeMillis());
+        bookShelfResult.setDurChapter(0);
+        bookShelfResult.setDurChapterPage(0);
+        bookShelfResult.setTag("http://www.gxwztv.com");
+        WebBookModelImpl.getInstance().getBookInfo(bookShelfResult).subscribe(new Observer<BookShelfBean>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                System.out.println("-------------subscribe");
+            }
+
+            @Override
+            public void onNext(BookShelfBean bookShelfBean) {
+                System.out.println("-------------next");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                System.out.println("-------------error");
+            }
+
+            @Override
+            public void onComplete() {
+                System.out.println("-------------complete");
+            }
+        });
     }
 }

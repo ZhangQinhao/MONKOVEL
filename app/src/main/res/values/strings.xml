@@ -3,9 +3,6 @@
 
     <string name="umeng_key">5954b3f999f0c76d1b001600</string>
 
-    <string name="baidu_app_id">9942412</string>
-    <string name="baidu_app_key">5cZ5UKGW2tqEXK0dUiv4ngLEQ7I4Bf6s</string>
-
     <string name="net_error_10001">没有网络</string>
     <string name="net_error_10002">网络连接超时</string>
     <string name="net_error_10003">数据解析失败</string>

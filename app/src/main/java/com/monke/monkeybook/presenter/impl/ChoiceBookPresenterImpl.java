@@ -48,7 +48,7 @@ public class ChoiceBookPresenterImpl extends BasePresenterImpl<IChoiceBookView> 
                     temp = new ArrayList<BookShelfBean>();
                 e.onNext(temp);
             }
-        }).subscribeOn(Schedulers.newThread())
+        }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SimpleObserver<List<BookShelfBean>>() {
                     @Override
@@ -85,7 +85,7 @@ public class ChoiceBookPresenterImpl extends BasePresenterImpl<IChoiceBookView> 
 
     private void searchBook(final long searchTime) {
         WebBookModelImpl.getInstance().getKindBook(url, page)
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .compose(((BaseActivity)mView.getContext()).<List<SearchBookBean>>bindUntilEvent(ActivityEvent.DESTROY))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SimpleObserver<List<SearchBookBean>>() {
@@ -129,7 +129,7 @@ public class ChoiceBookPresenterImpl extends BasePresenterImpl<IChoiceBookView> 
         bookShelfResult.setDurChapterPage(0);
         bookShelfResult.setTag(searchBookBean.getTag());
         WebBookModelImpl.getInstance().getBookInfo(bookShelfResult)
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .compose(((BaseActivity)mView.getContext()).<BookShelfBean>bindUntilEvent(ActivityEvent.DESTROY))
                 .subscribe(new SimpleObserver<BookShelfBean>() {

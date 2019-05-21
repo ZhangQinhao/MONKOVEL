@@ -2,25 +2,16 @@ apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '25.0.0'
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
 
     defaultConfig {
         applicationId "com.monke.monkeybook"
         minSdkVersion 17
-        targetSdkVersion 25
-        versionCode 9
-        versionName "1.2.4"
-        manifestPlaceholders = [UMENG_CHANNEL_VALUE: "debug"]
-    }
-
-    productFlavors{
-        baidu {
-            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "baidu"]
-        }
-        pyger{
-            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "pyger"]
-        }
+        targetSdkVersion 26
+        versionCode 16
+        versionName "1.3.6"
+        manifestPlaceholders = [UMENG_CHANNEL_VALUE: "pugongying"]
     }
 
     lintOptions {
@@ -31,16 +22,6 @@ android {
             buildConfigField "boolean", "IS_RELEASE", "true"
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            applicationVariants.all { variant ->
-                variant.outputs.each { output ->
-                    def outputFile = output.outputFile
-                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                        //这里修改apk文件名
-                        def fileName = APP_NAME +"_"+"${variant.productFlavors[0].name}"+ "_v" + defaultConfig.versionName + "(" + defaultConfig.versionCode + ").apk"
-                        output.outputFile = new File(outputFile.parent, fileName)
-                    }
-                }
-            }
         }
         debug {
             buildConfigField "boolean", "IS_RELEASE", "false"
@@ -59,41 +40,40 @@ repositories{
 
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    testCompile 'junit:junit:4.12'
-    compile(name: 'autoupdatesdk-release', ext: 'aar')
-    compile 'com.android.support:appcompat-v7:25.1.0'
-    compile 'com.android.support:design:25.1.0'
-    compile 'com.android.support:cardview-v7:25.1.0'
-    compile 'com.android.support:support-compat:25.1.0'
-    compile project(':basemvplib')
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    testImplementation 'junit:junit:4.12'
+    api 'com.android.support:appcompat-v7:28.0.0'
+    api 'com.android.support:design:28.0.0'
+    api 'com.android.support:cardview-v7:28.0.0'
+    api 'com.android.support:support-compat:28.0.0'
+    api project(':basemvplib')
     //GreenDao
-    compile 'org.greenrobot:greendao:3.0.1'
-    compile 'org.greenrobot:greendao-generator:3.0.0'
+    api 'org.greenrobot:greendao:3.0.1'
+    api 'org.greenrobot:greendao-generator:3.0.0'
     //JSOUP
-    compile 'org.jsoup:jsoup:1.10.2'
+    api 'org.jsoup:jsoup:1.10.2'
     //沉浸式状态栏
-    compile 'com.zhangmonke:ImmerseLayout:1.1.1'
+    api 'com.zhangmonke:ImmerseLayout:1.1.1'
     //ProgressBar
-    compile 'com.zhangmonke:MProgressBar:1.0.1'
+    api 'com.zhangmonke:MProgressBar:1.0.1'
     //Glide
-    compile 'com.github.bumptech.glide:glide:3.7.0'
+    api 'com.github.bumptech.glide:glide:3.7.0'
     //AutofitTextView
-    compile 'me.grantland:autofittextview:0.2.1'
+    api 'me.grantland:autofittextview:0.2.1'
     //删除粒子效果
-    compile 'tyrantgit:explosionfield:1.0.1'
+    api 'tyrantgit:explosionfield:1.0.1'
     //View简易动画
-    compile 'com.daimajia.easing:library:2.0@aar'
-    compile 'com.daimajia.androidanimations:library:2.2@aar'
+    api 'com.daimajia.easing:library:2.0@aar'
+    api 'com.daimajia.androidanimations:library:2.2@aar'
     //CircleImageView
-    compile 'de.hdodenhof:circleimageview:2.1.0'
+    api 'de.hdodenhof:circleimageview:2.1.0'
     //SwitchButton
-    compile 'com.kyleduo.switchbutton:library:1.4.4'
-    compile 'com.victor:lib:1.0.4'
-    compile files('libs/commons-codec-1.10-sources.jar')
-    compile files('libs/juniversalchardet-1.0.3.jar')
-    compile files('libs/umeng-analytics-v6.1.1.jar')
-    compile files('libs/utdid4all-1.0.4.jar')
+    api 'com.kyleduo.switchbutton:library:1.4.4'
+    api 'com.victor:lib:1.0.4'
+    api files('libs/commons-codec-1.10-sources.jar')
+    api files('libs/juniversalchardet-1.0.3.jar')
+    api files('libs/umeng-analytics-v6.1.1.jar')
+    api files('libs/utdid4all-1.0.4.jar')
 }
 
 greendao {

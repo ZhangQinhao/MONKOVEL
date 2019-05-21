@@ -1,6 +1,7 @@
-package com.monke.basemvplib.impl;
+package com.monke.monkeybook.base;
 
 import com.monke.basemvplib.EncodoConverter;
+import com.monke.basemvplib.impl.RetryIntercepter;
 
 import java.util.concurrent.TimeUnit;
 
@@ -9,13 +10,12 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
-public class BaseModelImpl {
-
+public class MBaseModelImpl {
     protected OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder()
             .connectTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)
             .readTimeout(10, TimeUnit.SECONDS)
-            .addNetworkInterceptor(new RetryIntercepter(1));
+            .addInterceptor(new ProxyInterceptor());
 
     protected Retrofit getRetrofitObject(String url) {
         return new Retrofit.Builder().baseUrl(url)
@@ -36,4 +36,5 @@ public class BaseModelImpl {
                 .client(clientBuilder.build())
                 .build();
     }
+
 }

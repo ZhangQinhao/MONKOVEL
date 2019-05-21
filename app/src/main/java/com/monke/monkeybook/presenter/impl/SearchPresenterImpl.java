@@ -65,7 +65,7 @@ public class SearchPresenterImpl extends BasePresenterImpl<ISearchView> implemen
                 e.onNext(temp);
                 e.onComplete();
             }
-        }).subscribeOn(Schedulers.newThread())
+        }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SimpleObserver<List<BookShelfBean>>() {
                     @Override
@@ -132,7 +132,7 @@ public class SearchPresenterImpl extends BasePresenterImpl<ISearchView> implemen
                 }
                 e.onNext(searchHistoryBean);
             }
-        }).subscribeOn(Schedulers.newThread())
+        }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SimpleObserver<SearchHistoryBean>() {
                     @Override
@@ -157,7 +157,7 @@ public class SearchPresenterImpl extends BasePresenterImpl<ISearchView> implemen
                 int a = DbHelper.getInstance().getDb().delete(SearchHistoryBeanDao.TABLENAME, SearchHistoryBeanDao.Properties.Type.columnName + "=? and " + SearchHistoryBeanDao.Properties.Content.columnName + " like ?", new String[]{String.valueOf(type), "%" + content + "%"});
                 e.onNext(a);
             }
-        }).subscribeOn(Schedulers.newThread())
+        }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SimpleObserver<Integer>() {
                     @Override
@@ -189,7 +189,7 @@ public class SearchPresenterImpl extends BasePresenterImpl<ISearchView> implemen
                         .build().list();
                 e.onNext(datas);
             }
-        }).subscribeOn(Schedulers.newThread())
+        }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SimpleObserver<List<SearchHistoryBean>>() {
                     @Override
@@ -264,7 +264,7 @@ public class SearchPresenterImpl extends BasePresenterImpl<ISearchView> implemen
                     final int finalSearchEngineIndex = searchEngineIndex;
                     WebBookModelImpl.getInstance().searchOtherBook(content, page, (String) searchEngine.get(searchEngineIndex).get(TAG_KEY))
                             .observeOn(AndroidSchedulers.mainThread())
-                            .subscribeOn(Schedulers.newThread())
+                            .subscribeOn(Schedulers.io())
                             .subscribe(new SimpleObserver<List<SearchBookBean>>() {
                                 @Override
                                 public void onNext(List<SearchBookBean> value) {
@@ -332,7 +332,7 @@ public class SearchPresenterImpl extends BasePresenterImpl<ISearchView> implemen
         bookShelfResult.setDurChapterPage(0);
         bookShelfResult.setTag(searchBookBean.getTag());
         WebBookModelImpl.getInstance().getBookInfo(bookShelfResult)
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SimpleObserver<BookShelfBean>() {
                     @Override

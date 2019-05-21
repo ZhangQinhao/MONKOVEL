@@ -1,7 +1,7 @@
 //Copyright (c) 2017. 章钦豪. All rights reserved.
 package com.monke.monkeybook.model.impl;
 
-import com.monke.basemvplib.impl.BaseModelImpl;
+import com.monke.monkeybook.base.MBaseModelImpl;
 import com.monke.monkeybook.bean.BookShelfBean;
 import com.monke.monkeybook.bean.ChapterListBean;
 import com.monke.monkeybook.bean.LocBookShelfBean;
@@ -25,7 +25,7 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 
-public class ImportBookModelImpl extends BaseModelImpl implements IImportBookModel {
+public class ImportBookModelImpl extends MBaseModelImpl implements IImportBookModel {
 
     public static ImportBookModelImpl getInstance() {
         return new ImportBookModelImpl();

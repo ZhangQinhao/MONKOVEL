@@ -65,6 +65,11 @@ public abstract class BaseActivity<T extends IPresenter> extends RxAppCompatActi
         }
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
     /**
      * P层解绑V层
      */

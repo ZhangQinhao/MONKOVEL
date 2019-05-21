@@ -133,8 +133,8 @@ public class DownloadService extends Service {
                     e.onComplete();
                 }
             })
-                    .subscribeOn(AndroidSchedulers.mainThread())
-                    .observeOn(Schedulers.io())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new SimpleObserver<DownloadChapterBean>() {
                         @Override
                         public void onNext(DownloadChapterBean value) {
@@ -149,8 +149,8 @@ public class DownloadService extends Service {
                                         e.onComplete();
                                     }
                                 })
-                                        .subscribeOn(AndroidSchedulers.mainThread())
-                                        .observeOn(Schedulers.io())
+                                        .subscribeOn(Schedulers.io())
+                                        .observeOn(AndroidSchedulers.mainThread())
                                         .subscribe(new SimpleObserver<Object>() {
                                             @Override
                                             public void onNext(Object value) {
@@ -220,7 +220,7 @@ public class DownloadService extends Service {
                 }
             })
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.newThread())
+                    .subscribeOn(Schedulers.io())
                     .subscribe(new SimpleObserver<BookContentBean>() {
                         @Override
                         public void onNext(BookContentBean value) {
@@ -258,7 +258,7 @@ public class DownloadService extends Service {
                     }
                 })
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribeOn(Schedulers.newThread())
+                        .subscribeOn(Schedulers.io())
                         .subscribe(new SimpleObserver<Boolean>() {
                             @Override
                             public void onNext(Boolean value) {
@@ -309,8 +309,8 @@ public class DownloadService extends Service {
                 e.onComplete();
             }
         })
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(Schedulers.io())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Object>() {
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -359,8 +359,8 @@ public class DownloadService extends Service {
                 }
                 e.onComplete();
             }
-        }).subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(Schedulers.io())
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SimpleObserver<DownloadChapterBean>() {
                     @Override
                     public void onNext(DownloadChapterBean value) {
