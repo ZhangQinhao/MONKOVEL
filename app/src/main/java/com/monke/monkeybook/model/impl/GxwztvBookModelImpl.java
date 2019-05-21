@@ -34,7 +34,7 @@ import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 public class GxwztvBookModelImpl extends MBaseModelImpl implements IGxwztvBookModel {
-    public static final String TAG = "http://www.gxwztv.com";
+    public static final String TAG = "http://www.gxwztv.net";
 
     public static GxwztvBookModelImpl getInstance() {
         return new GxwztvBookModelImpl();
@@ -73,7 +73,7 @@ public class GxwztvBookModelImpl extends MBaseModelImpl implements IGxwztvBookMo
                 List<LibraryNewBookBean> libraryNewBooks = new ArrayList<LibraryNewBookBean>();
                 for (int i = 0; i < newBookEs.size(); i++) {
                     Element itemE = newBookEs.get(i).getElementsByTag("a").get(0);
-                    LibraryNewBookBean item = new LibraryNewBookBean(itemE.text(), TAG + itemE.attr("href"), TAG, "gxwztv.com");
+                    LibraryNewBookBean item = new LibraryNewBookBean(itemE.text(), TAG + itemE.attr("href"), TAG, "gxwztv.net");
                     libraryNewBooks.add(item);
                 }
                 result.setLibraryNewBooks(libraryNewBooks);
@@ -89,7 +89,7 @@ public class GxwztvBookModelImpl extends MBaseModelImpl implements IGxwztvBookMo
                     List<SearchBookBean> books = new ArrayList<SearchBookBean>();
                     for (int j = 0; j < bookEs.size(); j++) {
                         SearchBookBean searchBookBean = new SearchBookBean();
-                        searchBookBean.setOrigin("gxwztv.com");
+                        searchBookBean.setOrigin("gxwztv.net");
                         searchBookBean.setTag(TAG);
                         searchBookBean.setName(bookEs.get(j).getElementsByTag("span").get(0).text());
                         searchBookBean.setNoteUrl(TAG + bookEs.get(j).getElementsByTag("a").get(0).attr("href"));
@@ -110,7 +110,7 @@ public class GxwztvBookModelImpl extends MBaseModelImpl implements IGxwztvBookMo
                     Element firstBookE = kindEs.get(i).getElementsByTag("dl").get(0);
                     SearchBookBean firstBook = new SearchBookBean();
                     firstBook.setTag(TAG);
-                    firstBook.setOrigin("gxwztv.com");
+                    firstBook.setOrigin("gxwztv.net");
                     firstBook.setName(firstBookE.getElementsByTag("a").get(1).text());
                     firstBook.setNoteUrl(TAG + firstBookE.getElementsByTag("a").get(0).attr("href"));
                     firstBook.setCoverUrl(firstBookE.getElementsByTag("a").get(0).getElementsByTag("img").get(0).attr("src"));
@@ -121,7 +121,7 @@ public class GxwztvBookModelImpl extends MBaseModelImpl implements IGxwztvBookMo
                     for (int j = 0; j < otherBookEs.size(); j++) {
                         SearchBookBean item = new SearchBookBean();
                         item.setTag(TAG);
-                        item.setOrigin("gxwztv.com");
+                        item.setOrigin("gxwztv.net");
                         item.setKind(kindItem.getKindName());
                         item.setNoteUrl(TAG+otherBookEs.get(j).getElementsByTag("a").get(0).attr("href"));
                         item.setName(otherBookEs.get(j).getElementsByTag("a").get(0).text());
@@ -164,7 +164,7 @@ public class GxwztvBookModelImpl extends MBaseModelImpl implements IGxwztvBookMo
                             item.setAuthor(booksE.get(i).getElementsByClass("col-xs-2").get(0).text());
                             item.setKind(booksE.get(i).getElementsByClass("col-xs-1").get(0).text());
                             item.setLastChapter(booksE.get(i).getElementsByClass("col-xs-4").get(0).getElementsByTag("a").get(0).text());
-                            item.setOrigin("gxwztv.com");
+                            item.setOrigin("gxwztv.net");
                             item.setName(booksE.get(i).getElementsByClass("col-xs-3").get(0).getElementsByTag("a").get(0).text());
                             item.setNoteUrl(TAG + booksE.get(i).getElementsByClass("col-xs-3").get(0).getElementsByTag("a").get(0).attr("href"));
                             item.setCoverUrl("noimage");
@@ -224,7 +224,7 @@ public class GxwztvBookModelImpl extends MBaseModelImpl implements IGxwztvBookMo
         }
         bookInfoBean.setIntroduce("\u3000\u3000" + introduce);
         bookInfoBean.setChapterUrl(TAG + resultE.getElementsByClass("list-group-item tac").get(0).getElementsByTag("a").get(0).attr("href"));
-        bookInfoBean.setOrigin("gxwztv.com");
+        bookInfoBean.setOrigin("gxwztv.net");
         return bookInfoBean;
     }
 
@@ -309,7 +309,7 @@ public class GxwztvBookModelImpl extends MBaseModelImpl implements IGxwztvBookMo
                 bookContentBean.setTag(TAG);
                 try {
                     Document doc = Jsoup.parse(s);
-                    List<TextNode> contentEs = doc.getElementById("txtContent").textNodes();
+                    List<Element> contentEs = doc.getElementById("txtContent").children();
                     StringBuilder content = new StringBuilder();
                     for (int i = 0; i < contentEs.size(); i++) {
                         String temp = contentEs.get(i).text().trim();
