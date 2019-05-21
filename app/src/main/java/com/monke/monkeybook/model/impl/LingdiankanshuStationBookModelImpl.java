@@ -130,7 +130,7 @@ public class LingdiankanshuStationBookModelImpl extends BaseModelImpl implements
 
         bookInfoBean.setIntroduce(content.toString());
         bookInfoBean.setChapterUrl(novelUrl);
-        bookInfoBean.setOrigin("gxwztv.com");
+        bookInfoBean.setOrigin("gxwztv.net");
         return bookInfoBean;
     }
 

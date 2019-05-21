@@ -27,24 +27,24 @@ public class LibraryPresenterImpl extends BasePresenterImpl<ILibraryView> implem
     private final LinkedHashMap<String,String> kinds = new LinkedHashMap<>();
 
     public LibraryPresenterImpl() {
-        kinds.put("东方玄幻","http://www.gxwztv.com/xuanhuanxiaoshuo/");
-        kinds.put("西方奇幻","http://www.gxwztv.com/qihuanxiaoshuo/");
-        kinds.put("热血修真","http://www.gxwztv.com/xiuzhenxiaoshuo/");
-        kinds.put("武侠仙侠","http://www.gxwztv.com/wuxiaxiaoshuo/");
-        kinds.put("都市爽文","http://www.gxwztv.com/dushixiaoshuo/");
-        kinds.put("言情暧昧","http://www.gxwztv.com/yanqingxiaoshuo/");
-        kinds.put("灵异悬疑","http://www.gxwztv.com/lingyixiaoshuo/");
-        kinds.put("运动竞技","http://www.gxwztv.com/jingjixiaoshuo/");
-        kinds.put("历史架空","http://www.gxwztv.com/lishixiaoshuo/");
-        kinds.put("审美","http://www.gxwztv.com/danmeixiaoshuo/");
-        kinds.put("科幻迷航","http://www.gxwztv.com/kehuanxiaoshuo/");
-        kinds.put("游戏人生","http://www.gxwztv.com/youxixiaoshuo/");
-        kinds.put("军事斗争","http://www.gxwztv.com/junshixiaoshuo/");
-        kinds.put("商战人生","http://www.gxwztv.com/shangzhanxiaoshuo/");
-        kinds.put("校园爱情","http://www.gxwztv.com/xiaoyuanxiaoshuo/");
-        kinds.put("官场仕途","http://www.gxwztv.com/guanchangxiaoshuo/");
-        kinds.put("娱乐明星","http://www.gxwztv.com/zhichangxiaoshuo/");
-        kinds.put("其他","http://www.gxwztv.com/qitaxiaoshuo/");
+        kinds.put("东方玄幻","http://www.gxwztv.net/xuanhuanxiaoshuo/");
+        kinds.put("西方奇幻","http://www.gxwztv.net/qihuanxiaoshuo/");
+        kinds.put("热血修真","http://www.gxwztv.net/xiuzhenxiaoshuo/");
+        kinds.put("武侠仙侠","http://www.gxwztv.net/wuxiaxiaoshuo/");
+        kinds.put("都市爽文","http://www.gxwztv.net/dushixiaoshuo/");
+        kinds.put("言情暧昧","http://www.gxwztv.net/yanqingxiaoshuo/");
+        kinds.put("灵异悬疑","http://www.gxwztv.net/lingyixiaoshuo/");
+        kinds.put("运动竞技","http://www.gxwztv.net/jingjixiaoshuo/");
+        kinds.put("历史架空","http://www.gxwztv.net/lishixiaoshuo/");
+        kinds.put("审美","http://www.gxwztv.net/danmeixiaoshuo/");
+        kinds.put("科幻迷航","http://www.gxwztv.net/kehuanxiaoshuo/");
+        kinds.put("游戏人生","http://www.gxwztv.net/youxixiaoshuo/");
+        kinds.put("军事斗争","http://www.gxwztv.net/junshixiaoshuo/");
+        kinds.put("商战人生","http://www.gxwztv.net/shangzhanxiaoshuo/");
+        kinds.put("校园爱情","http://www.gxwztv.net/xiaoyuanxiaoshuo/");
+        kinds.put("官场仕途","http://www.gxwztv.net/guanchangxiaoshuo/");
+        kinds.put("娱乐明星","http://www.gxwztv.net/zhichangxiaoshuo/");
+        kinds.put("其他","http://www.gxwztv.net/qitaxiaoshuo/");
 
         mCache = ACache.get(MApplication.getInstance());
     }
